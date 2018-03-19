@@ -21,5 +21,5 @@ class Address(Base):
     employee_id = Column(Integer,ForeignKey('employee.id'))
     employee = relationship(Employee)
     
-engine = create_engine('sqlite:///employeaddress.db')
+engine = create_engine('sqlite:///employeeaddress.db')
 Base.metadata.create_all(engine)

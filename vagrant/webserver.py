@@ -46,18 +46,21 @@ class webServerHandler(BaseHTTPRequestHandler):
                     output += "<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' >" % restaurantIDPath
                     output += "<input name = 'newRestaurantName' type='text' placeholder = '%s' >" % myRestaurantQuery.name
                     output += "<input type = 'submit' value= 'Rename'>"
-                    output += "</form></body></html>"
+                    output += "</form>"
+                    output += "</body></html>"
                     
                     self.wfile.write(output)
                 
             if self.path.endswith("/restaurants"):
                 restaurants = session.query(Restaurant).all()
                 output = ""
+                
+                output += " <a href='/restaurants/new'>Make a New Restaurant Here</a></br></br>"
+                
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 output += "<html><body>"
-                output += " <a href='/restaurants/new'>Make a New Restaurant Here</a></br></br>"
                 for restaurant in restaurants:
                     output += restaurant.name
                     output += "</br>"

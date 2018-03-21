@@ -17,24 +17,6 @@ class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if self.path.endswith("/edit"):
-                restaurantIDPath = self.path.split("/")[2]
-                myRestaurantQuery = session.query(Restaurant).filter_by(
-                    id=restaurantIDPath).one()
-                if myRestaurantQuery:
-                    self.send_response(200)
-                    self.send_header('Content-type', 'text/html')
-                    self.end_headers()
-                    output = "<html><body>"
-                    output += "<h1>"
-                    output += myRestaurantQuery.name
-                    output += "</h1>"
-                    output += "<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' >" % restaurantIDPath
-                    output += "<input name= 'newRestaurantName' type='text' placeholder = '%s' >" % myRestaurantQuery.name
-                    output += "<input type= 'submit' value='Rename'>"
-                    output += "</form></body></html>"
-                    
-                    self.wfile.write(output)
             
             if self.path.endswith("/restaurants/new"):
                 self.send_response(200)
@@ -49,6 +31,24 @@ class webServerHandler(BaseHTTPRequestHandler):
                 output += "</form></body></html>"
                 self.wfile.write(output)
                 return
+            if self.path.endswith("/edit"):
+                restaurantIDPath = self.path.split("/")[2]
+                myRestaurantQuery = session.query(Restaurant).filter_by(
+                    id=restaurantIDPath).one()
+                if myRestaurantQuery:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.end_headers()
+                    output = "<html><body>"
+                    output += "<h1>"
+                    output += myRestaurantQuery.name
+                    output += "</h1>"
+                    output += "<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' >" % restaurantIDPath
+                    output += "<input name = 'newRestaurantName' type='text' placeholder = '%s' >" % myRestaurantQuery.name
+                    output += "<input type = 'submit' value= 'Rename'>"
+                    output += "</form></body></html>"
+                    
+                    self.wfile.write(output)
                 
             if self.path.endswith("/restaurants"):
                 restaurants = session.query(Restaurant).all()

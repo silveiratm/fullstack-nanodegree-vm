@@ -19,8 +19,8 @@ class webServerHandler(BaseHTTPRequestHandler):
         try:
             if self.path.endswith("/edit"):
                 restaurantIDPath = self.path.split("/")[2]
-                myRestaurantQuery = session.query(Restaurant).filter_by(id = 
-                    restaurantIDPath).one()
+                myRestaurantQuery = session.query(Restaurant).filter_by(
+                    id =restaurantIDPath).one()
                 if myRestaurantQuery != []:
                     self.send_responde(200)
                     self.send_header('Content-type', 'text/html')
@@ -29,10 +29,8 @@ class webServerHandler(BaseHTTPRequestHandler):
                     output += "<h1>"
                     output += myRestaurantQuery.name
                     output += "</h1>"
-                    output += "<form method='POST' enctype='multipart/form-data' 
-                        action='/restaurants/%s/edit' >" % restaurantIDPath
-                    output += "<input name= 'newRestaurantName' type='text'
-                        placegolder = '%s' >" % myRestaurantQuery.name
+                    output += "<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' >" % restaurantIDPath
+                    output += "<input name= 'newRestaurantName' type='text' placegolder = '%s' >" % myRestaurantQuery.name
                     output += "<input type= 'submit' value='Rename'>"
                     output += "</form></body></html>"
                     

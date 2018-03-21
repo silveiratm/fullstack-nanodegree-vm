@@ -83,8 +83,8 @@ class webServerHandler(BaseHTTPRequestHandler):
                     messagecontent = fields.get('newRestaurantName')
                     restaurantIDPath = self.path.split("/")[2]
                     
-                    myRestaurantQuery = session.query(Restaurant).filter_by(id = 
-                        restaurantIDPatch).one()
+                    myRestaurantQuery = session.query(Restaurant).filter_by(
+                        id=restaurantIDPatch).one()
                     if myRestaurantQuery != []:
                         myRestaurantQuery.name = messagecontent[0]
                         session.add(myRestaurantQuery)

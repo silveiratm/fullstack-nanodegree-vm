@@ -27,11 +27,22 @@ class webServerHandler(BaseHTTPRequestHandler):
                 for restaurant in restaurants:
                     output += restaurant.name
                     output += "</br>"
-                    output += "<a href="">Edit</a>
+                    output += "<a href="localhost:8080/Edit">Edit</a>"
                     output += "</br>"
-                    output += "<a href="">Delete</a>
+                    output += "<a href="localhost:8080/Edit">Delete</a>"
                     output += "</br></br>"
                     
+                output += "</body></html>"
+                self.wfile.write(output)
+                return
+            
+            if self.path.endswith("/Edit"):
+                output = ""
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                output += "<html><body>"
+                output += "<h1>Edição</h1>"
                 output += "</body></html>"
                 self.wfile.write(output)
                 return

@@ -37,7 +37,7 @@ class webServerHandler(BaseHTTPRequestHandler):
     
 def main():
     try:
-        server = HTTPServer(('', port), webServerHandler)
+        server = HTTPServer(('', 8080), webServerHandler)
         print 'Web Server running...open localhost:8080/restaurants in you browser'
         server.serve_forever()
     except KeyboardInterrupt:

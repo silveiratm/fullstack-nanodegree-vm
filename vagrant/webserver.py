@@ -27,25 +27,15 @@ class webServerHandler(BaseHTTPRequestHandler):
                 for restaurant in restaurants:
                     output += restaurant.name
                     output += "</br>"
-                    output += "<a href="https://www.google.com.br/">Edit</a>"
+                    output += "<a href="#">Edit</a>"
                     output += "</br>"
-                    output += "<a href="https://www.google.com.br/">Delete</a>"
+                    output += "<a href="#">Delete</a>"
                     output += "</br></br>"
                     
                 output += "</body></html>"
                 self.wfile.write(output)
                 return
             
-            if self.path.endswith("/Edit"):
-                output = ""
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                output += "<html><body>"
-                output += "<h1>Edição</h1>"
-                output += "</body></html>"
-                self.wfile.write(output)
-                return
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
 

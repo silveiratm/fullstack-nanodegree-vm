@@ -86,8 +86,16 @@ class webServerHandler(BaseHTTPRequestHandler):
                     messagecontent = fields.get('newRestaurantName')
                     restaurantIDPath = self.path.split("/")[2]
                     
-                    myRestaurantQuery = session.query(Restaurant).filter_by(id = restaurantIDPatch).one()
-                    
+                    myRestaurantQuery = session.query(Restaurant).filter_by(id = 
+                        restaurantIDPatch).one()
+                    if myRestaurantQuery != []:
+                        myRestaurantQuery.name = messagecontent[0]
+                        session.add(myRestaurantQuery)
+                        session.commit()
+                        self.send_response(301)
+                        self.send_header('Content-type', 'text/html')
+                        self.send_header('Location', '/restaurants')
+                        self.end_headers()
                     
             
             if self.path.endswith("/restaurants/new"):
@@ -100,7 +108,6 @@ class webServerHandler(BaseHTTPRequestHandler):
                 newRestaurant = Restaurant(name=messagecontent[0])
                 session.add(newRestaurant)
                 session.commit()
-                
                 self.send_response(301)
                 self.send_header('Content-type', 'text/html')
                 self.send_header('Location', '/restaurants')

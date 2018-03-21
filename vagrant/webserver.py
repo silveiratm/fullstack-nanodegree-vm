@@ -68,7 +68,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 session.add(newRestaurant)
                 session.commit()
                 
-                self.response(301)
+                self.send_response(301)
                 self.send_header('Content-type', 'text/html')
                 self.send_header('Location', '/restaurants')
                 self.end_headers()

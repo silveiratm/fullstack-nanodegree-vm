@@ -43,7 +43,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                     output += "<h1>"
                     output += myRestaurantQuery.name
                     output += "</h1>"
-                    output += "<form method='POST' enctype='multipart/form-data' action='/restaurants/%s/edit' >" % restaurantIDPath
+                    output += "<form method='POST' enctype='multipart/form-data' action= '/restaurants/%s/edit' >" % restaurantIDPath
                     output += "<input name = 'newRestaurantName' type='text' placeholder = '%s' >" % myRestaurantQuery.name
                     output += "<input type = 'submit' value= 'Rename'>"
                     output += "</form>"
@@ -105,13 +105,14 @@ class webServerHandler(BaseHTTPRequestHandler):
                     fields = cgi.parse_multipart(self.rfile, pdict)
                     messagecontent = fields.get('newRestaurantName')
                     
-                newRestaurant = Restaurant(name=messagecontent[0])
-                session.add(newRestaurant)
-                session.commit()
-                self.send_response(301)
-                self.send_header('Content-type', 'text/html')
-                self.send_header('Location', '/restaurants')
-                self.end_headers()
+                    
+                    newRestaurant = Restaurant(name=messagecontent[0])
+                    session.add(newRestaurant)
+                    session.commit()
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', '/restaurants')
+                    self.end_headers()
 
         except:
             pass

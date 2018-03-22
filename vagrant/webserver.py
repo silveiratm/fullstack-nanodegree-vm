@@ -50,7 +50,25 @@ class webServerHandler(BaseHTTPRequestHandler):
                     output += "</body></html>"
 
                     self.wfile.write(output)
+                    return
+            if self.path.endswith("/delete"):
+                restaurantIDPath = self.path.split("/")[2]
+                myRestaurantQuery = session.query(Restaurant).filter_by(
+                    id=restaurantIDPath).one()
+                if myRestaurantQuery:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/html')
+                    self.end_headers()
+                    output = "<html><body>"
+                    output += "<h1> Are you sure you want to delete "
+                    output += myRestaurantQuery.name
+                    output += "? </h1>"
+                    output += "<form method= 'POST' enctype='multipart/form-data' action = '/restaurants/%s/delete' >" % restaurantIDPath
+                    output += "<input type = 'submit' value = 'Delete'>"
+                    output += "</form><body><html>"
 
+                    self.wfile.write(output)
+                    return
             if self.path.endswith("/restaurants"):
                 restaurants = session.query(Restaurant).all()
                 output = ""
@@ -68,7 +86,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                     # Objective 4 -- Replace Edit href
                     output += "<a href ='/restaurants/%s/edit' >Edit </a> " % restaurant.id
                     output += "</br>"
-                    output += "<a href =' #'> Delete </a>"
+                    output += "<a href ='/restaurants/%s/delete' >Delete </a> " % restaurant.id
                     output += "</br></br></br>"
 
                 output += "</body></html>"
@@ -80,6 +98,22 @@ class webServerHandler(BaseHTTPRequestHandler):
     # Objective 3 Step 3- Make POST method
     def do_POST(self):
         try:
+            if self.path.endswith("/delete"):
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    restaurantIDPath = self.path.split("/")[2]
+
+                    myRestaurantQuery = session.query(Restaurant).filter_by(
+                        id=restaurantIDPath).one()
+                    if myRestaurantQuery != []:
+                        session.delete(myRestaurantQuery)
+                        session.commit()
+                        self.send_response(301)
+                        self.send_header('Content-type', 'text/html')
+                        self.send_header('Location', '/restaurants')
+                        self.end_headers()
+
             if self.path.endswith("/edit"):
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))

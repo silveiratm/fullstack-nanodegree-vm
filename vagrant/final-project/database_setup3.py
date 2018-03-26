@@ -5,8 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
-Base = declarative_base()
 
+Base = declartive_base()
 
 class Restaurant(Base):
     __tablename__ = 'restaurant'
@@ -27,18 +27,7 @@ class MenuItem(Base):
     restaurant = relationship(Restaurant)
 
 
-    @property
-    def serialize(self):
-        #Returns object data in easily serializeable format
-        return {
-            'name': self.name,
-            'description': self.description,
-            'id': self.id,
-            'price': self.price,
-            'course': self.course,
-        }
-
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///restaurantmenu3.db')
 
 
 Base.metadata.create_all(engine)

@@ -1,0 +1,12 @@
+.body_index {
+          position: absolute;
+          left: 25%;
+          border: 2px solid black;
+          border-radius: 25px;
+          padding: 5px;
+          margin: 5px;
+
+}
+h1 {
+  text-align: center;
+}

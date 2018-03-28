@@ -7,6 +7,11 @@
           margin: 5px;
 
 }
+
+.alert {
+      color: red;
+}
+
 h1 {
   text-align: center;
 }
